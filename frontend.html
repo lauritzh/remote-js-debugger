@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Remote Debugger</title>
+        <meta charset="UTF-8">
+        <meta name="author" content="Lauritz Holtmann">
+    </head>
+<body>
+
+    <!-- Remote Debugger v0.1 -->
+
+<script>
+let server = "http://localhost:1337";
+var tempResult = "";
+
+var executeCommand = function() {
+    var data = { "task": window.command.value };
+
+    fetch(`${server}/task`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    }).then(data => {
+        console.log('Waiting for update from server!');
+        onResultPublished();
+    }).catch((error) => {
+        console.error('Error:', error);
+        alert(error)
+    });
+}
+
+function onResultPublished(callback) {
+    setTimeout(checkResultPublished, 0);
+
+    function checkResultPublished() {
+        if (tempResult) {
+            console.log("Writing result to DOM.")
+            window.result.innerText = JSON.stringify(JSON.parse(tempResult), null, 4);
+            tempResult = "";
+        }
+        else {
+            fetch(`${server}/result`)
+            .then(response => response.json())
+            .then(data => tempResult = data.result);
+
+            setTimeout(checkResultPublished, 3000);
+        }
+    }
+}
+</script>
+
+<h1>Remote Debugger</h1>
+
+<input type="text" value="document" id="command">
+<button onclick="executeCommand()">execute</button>
+<pre><code>
+    <div id="result"></div>
+</pre></code>
+
+</body>
+</html>
