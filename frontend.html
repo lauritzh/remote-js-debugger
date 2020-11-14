@@ -7,14 +7,14 @@
     </head>
 <body>
 
-    <!-- Remote Debugger v0.1 -->
+    <!-- Remote Debugger v0.2 -->
 
 <script>
-let server = "http://localhost:1337";
-var tempResult = "";
+let server = "https://localhost:1338";
+let tempResult = "";
 
 var executeCommand = function() {
-    var data = { "task": window.command.value };
+    let data = { "task": window.command.value };
 
     fetch(`${server}/task`, {
         method: 'POST',

@@ -17,6 +17,8 @@ The debugger uses a server-client scenario with the following components:
 Idealized example setup:
 ![Basic Scenario](scenario.png)
 
+Frontend demo:
+![Frontend Demo](demo.gif)
 
 ## Setup
 1. Launch backend component:
@@ -28,5 +30,5 @@ $ node backend.js
 
 
 ## ToDos
- - [ ] Implement HTTPS
+ - [x] Implement HTTPS
  - [ ] Implement Jython based Burp Extension as frontend

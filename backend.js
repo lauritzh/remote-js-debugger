@@ -1,10 +1,12 @@
 //
 // (c) Lauritz Holtmann 2020
-//
+// v0.2
 //
 
 const express = require('express')
-var bodyParser = require('body-parser');
+const fs = require('fs')
+const https = require('https')
+const bodyParser = require('body-parser');
 const cors = require('cors');
 
 // express
@@ -52,8 +54,17 @@ app.get('/result', (req, res) => {
     res.json({'result':result});
 })
 
-// Launch web server
-const port = 1337
-app.listen(port, () => {
-  console.log(`Backend server listening at http://localhost:${port}`)
+// Launch web server(s)
+const port = 1337;
+const port_https = 1338;
+const ip = "127.0.0.1";
+app.listen(port, ip, () => {
+  console.log(`Backend server listening at http://${ip}:${port}`)
 })
+
+https.createServer({
+    key: fs.readFileSync('example.key'),
+    cert: fs.readFileSync('example.crt')
+  }, app).listen(port_https, ip, () => {
+    console.log(`Backend server listening at https://${ip}:${port_https}`)
+  })
