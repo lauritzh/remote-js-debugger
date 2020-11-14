@@ -14,10 +14,10 @@ The debugger uses a server-client scenario with the following components:
 * Agent
     * The *agent* executes provided JavaScripts and forwards the results to the *backend* component.
 
-Idealized example setup:
+Idealized example setup:      
 ![Basic Scenario](scenario.png)
 
-Frontend demo:
+Frontend demo:     
 ![Frontend Demo](demo.gif)
 
 ## Setup
