@@ -34,6 +34,7 @@ var executeCommand = function() {
 function onResultPublished(callback) {
     setTimeout(checkResultPublished, 0);
 
+    // Poll until result is received
     function checkResultPublished() {
         if (tempResult) {
             console.log("Writing result to DOM.")
